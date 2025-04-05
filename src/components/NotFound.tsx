@@ -1,6 +1,4 @@
-import React from "react";
 import { Link } from "react-router-dom";
-
 const NotFound = () => {
   return (
     <div className="min-h-screen bg-theme text-theme flex flex-col items-center justify-center px-4 text-center">

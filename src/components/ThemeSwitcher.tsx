@@ -6,9 +6,17 @@ const ThemeSwitcher: React.FC = () => {
   const { setTheme } = useThemeStore();
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
+  /**
+   * ontheme change handler
+   * @param theme
+   */
+  const onThemeChangeHandler = (theme: string) => {
+    setTheme(theme);
+    setIsOpen(false);
+  };
+
   return (
     <>
-      {/* Floating Theme Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="fixed bottom-6 right-6 bg-primary text-theme p-4 rounded-full shadow-2xl z-50 transition-all duration-300 hover:scale-105"
@@ -42,7 +50,7 @@ const ThemeSwitcher: React.FC = () => {
               <div
                 key={themeKey}
                 className="p-3 rounded-xl cursor-pointer transition-all duration-300 hover:scale-105 bg-theme theme-border shadow-lg"
-                onClick={() => setTheme(themeKey)}
+                onClick={() => onThemeChangeHandler(themeKey)}
               >
                 <div className="grid grid-cols-6 gap-1">
                   {[

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import InputField from "@/components/InputFieldWithFloatingLabel";
 import PasswordField from "@components/PasswordField";
@@ -13,51 +14,56 @@ interface AuthFormProps {
   setIsLogin: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const AuthForm: React.FC<AuthFormProps> = ({ isLogin, setIsLogin }) => {
-  const [loginData, setLoginData] = useState({
-    email: "admin@gmail.com",
-    password: "Admin@123",
-  });
-  const [signupData, setSignupData] = useState({
-    fullName: "",
-    email: "",
-    password: "",
-  });
+type AuthFormValues = {
+  name?: string;
+  email: string;
+  password: string;
+};
 
+const AuthForm: React.FC<AuthFormProps> = ({ isLogin, setIsLogin }) => {
   const [showLoginPassword, setShowLoginPassword] = useState(false);
   const [showSignupPassword, setShowSignupPassword] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const { signInWithGoogle, signUpWithEmail, signInWithEmail } = useAuth();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+    watch,
+  } = useForm<AuthFormValues>({
+    defaultValues: isLogin
+      ? { email: "admin@gmail.com", password: "Admin@123" }
+      : { name: "", email: "", password: "" },
+  });
 
-    if (isLogin) {
-      if (!loginData.email || !loginData.password) {
-        toast.error("Please fill in all fields.");
-        return;
-      }
+  const values = watch();
 
-      try {
-        await signInWithEmail(loginData.email, loginData.password);
-      } catch (error: any) {
-        toast.error(error.message || "Sign-in failed.");
+  const onSubmit = async (data: AuthFormValues) => {
+    setIsSubmitting(true);
+    try {
+      if (isLogin) {
+        const { email, password } = data as AuthFormValues;
+        if (!email || !password) {
+          toast.error("Please fill in all fields.");
+          return;
+        }
+        await signInWithEmail(email, password);
+      } else {
+        const { name, email, password } = data as AuthFormValues;
+        if (!name || !email || !password) {
+          toast.error("Please fill in all fields.");
+          return;
+        }
+        await signUpWithEmail(name, email, password);
       }
-    } else {
-      if (!signupData.fullName || !signupData.email || !signupData.password) {
-        toast.error("Please fill in all fields.");
-        return;
-      }
-
-      try {
-        await signUpWithEmail(
-          signupData.fullName,
-          signupData.email,
-          signupData.password
-        );
-      } catch (error: any) {
-        toast.error(error.message || "Signup failed.");
-      }
+    } catch (error: any) {
+      toast.error(error.message || "Authentication failed.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -65,24 +71,34 @@ const AuthForm: React.FC<AuthFormProps> = ({ isLogin, setIsLogin }) => {
     try {
       await signInWithGoogle();
     } catch (error: any) {
-      console.log(error);
-
       toast.error(error.message || "Google Sign-In failed.");
     }
   };
 
+  // handle switching between login/signup and reset fields
+  const handleSwitch = (toLogin: boolean) => {
+    setIsLogin(toLogin);
+    reset(
+      toLogin
+        ? { email: "admin@gmail.com", password: "Admin@123" }
+        : { name: "", email: "", password: "" }
+    );
+  };
+
   return (
     <>
-      <form className="space-y-6 w-full max-w-sm" onSubmit={handleSubmit}>
+      <form
+        className="space-y-6 w-full max-w-sm"
+        onSubmit={handleSubmit(onSubmit)}
+      >
         {!isLogin && (
           <InputField
-            id="fullName"
+            id="name"
             type="text"
             placeholder="Full Name"
-            value={signupData.fullName}
-            onChange={(e) =>
-              setSignupData({ ...signupData, fullName: e.target.value })
-            }
+            error={errors?.name?.message}
+            value={values?.name || ""}
+            {...register("name")}
           />
         )}
 
@@ -90,27 +106,21 @@ const AuthForm: React.FC<AuthFormProps> = ({ isLogin, setIsLogin }) => {
           id="email"
           type="email"
           placeholder="Email"
-          value={isLogin ? loginData.email : signupData.email}
-          onChange={(e) =>
-            isLogin
-              ? setLoginData({ ...loginData, email: e.target.value })
-              : setSignupData({ ...signupData, email: e.target.value })
-          }
+          error={errors.email?.message}
+          value={values.email || ""}
+          {...register("email")}
         />
 
         <PasswordField
           id="password"
           placeholder="Password"
-          value={isLogin ? loginData.password : signupData.password}
+          value={values.password || ""}
+          error={errors.password?.message}
           showPassword={isLogin ? showLoginPassword : showSignupPassword}
           setShowPassword={
             isLogin ? setShowLoginPassword : setShowSignupPassword
           }
-          onChange={(e) =>
-            isLogin
-              ? setLoginData({ ...loginData, password: e.target.value })
-              : setSignupData({ ...signupData, password: e.target.value })
-          }
+          {...register("password")}
         />
 
         {isLogin && (
@@ -128,8 +138,17 @@ const AuthForm: React.FC<AuthFormProps> = ({ isLogin, setIsLogin }) => {
           </div>
         )}
 
-        <PrimaryButton type="submit" className="mt-4">
-          {isLogin ? "Login" : "Signup"}
+        <PrimaryButton type="submit" className="mt-4" disabled={isSubmitting}>
+          {isSubmitting ? (
+            <div className="flex items-center justify-center gap-3">
+              <span className="loader inline-block w-5 h-5 border-2 text-theme rounded-full animate-spin" />
+              <span className="text-theme">Loading..</span>
+            </div>
+          ) : isLogin ? (
+            "Login"
+          ) : (
+            "Signup"
+          )}
         </PrimaryButton>
 
         <p className="text-center w-full"> OR </p>
@@ -150,7 +169,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ isLogin, setIsLogin }) => {
             Don't have an account?{" "}
             <button
               type="button"
-              onClick={() => setIsLogin(false)}
+              onClick={() => handleSwitch(false)}
               className="text-primary hover:underline"
             >
               Sign up now!
@@ -161,7 +180,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ isLogin, setIsLogin }) => {
             Already have an account?{" "}
             <button
               type="button"
-              onClick={() => setIsLogin(true)}
+              onClick={() => handleSwitch(true)}
               className="text-primary hover:underline"
             >
               Login here!
@@ -169,6 +188,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ isLogin, setIsLogin }) => {
           </p>
         )}
       </form>
+
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <ForgotPassword onClose={() => setIsModalOpen(false)} />
       </Modal>
