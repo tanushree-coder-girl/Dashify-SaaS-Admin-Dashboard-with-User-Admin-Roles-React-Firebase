@@ -1,0 +1,104 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background-color: #000000;
+  --surface-color: #121212;
+  --primary-color: linear-gradient(45deg, #ff00ff, #cc00cc, #00ffff, #00cccc);
+  --secondary-color: linear-gradient(45deg, #ff00ff, #cc00cc, #00ffff, #00cccc);
+
+  --text-secondary-color: linear-gradient(
+    45deg,
+    #00ffff,
+    #00cccc,
+    #ff00ff,
+    #cc00cc
+  );
+  --text-color: #fafafa;
+  --border-color: #333333;
+  --error-color: #ff4d4d;
+  --success-color: #00c853;
+  --font-family: "Inter", "Poppins", sans-serif;
+}
+
+/* ✅ Apply Font Globally */
+body {
+  font-family: var(--font-family);
+  background: var(--background-color);
+  color: var(--text-color);
+}
+
+/* ✅ Utility Classes */
+.font-theme {
+  font-family: var(--font-family);
+}
+
+/* ✅ Utility Classes with Gradient Support */
+.bg-theme {
+  background: var(--background-color);
+}
+
+.bg-surface {
+  background: var(--surface-color);
+}
+
+.bg-secondary {
+  background: var(--secondary-color);
+}
+
+.text-secondary {
+  color: var(--text-secondary-color);
+}
+
+.text-theme {
+  color: var(--text-color);
+}
+
+.text-error {
+  color: var(--error-color);
+}
+
+.text-success {
+  color: var(--success-color);
+}
+
+.bg-error {
+  background: var(--error-color);
+}
+
+.bg-success {
+  background: var(--success-color);
+}
+
+.bg-primary {
+  background: var(--primary-color);
+}
+
+.text-primary {
+  background: var(--primary-color);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.bg-primary-hover {
+  background: var(--primary-color);
+  background-size: 0% 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.5s ease-in-out;
+}
+
+.bg-primary-hover:hover {
+  background-size: 100% 100%;
+  border-radius: 0 0 20% 0 0;
+}
+
+.theme-border {
+  border: 1px solid var(--border-color);
+}
+
+.theme-border-b {
+  border-bottom: 1px solid var(--border-color);
+}
