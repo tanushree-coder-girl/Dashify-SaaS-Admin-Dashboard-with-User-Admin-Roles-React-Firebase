@@ -3,6 +3,7 @@ import ThemeSwitcher from "@components/ThemeSwitcher";
 import AuthForm from "@pages/auth/AuthForm";
 import logo from "@assets/images/dashify_logo.png";
 import useThemeStore from "@/store/themeStore";
+import login_bg from "@assets/images/login_bg.png";
 
 const Auth: React.FC = () => {
   const [isLogin, setIsLogin] = useState<boolean>(true);
@@ -17,6 +18,7 @@ const Auth: React.FC = () => {
             alt="Logo"
             style={{ filter: `invert(${theme.includes("light") ? 0 : 1})` }}
             className="w-36 h-auto"
+            loading="lazy"
           />
         </div>
 
@@ -26,7 +28,8 @@ const Auth: React.FC = () => {
       <div className="hidden md:flex w-[50%] h-screen relative items-center justify-center p-6">
         <div className="absolute inset-0 bg-surface opacity-80 rounded-lg"></div>
         <img
-          src="/src/assets/images/login_bg.png"
+          src={login_bg}
+          loading="lazy"
           alt="Adminify Dashboard Preview"
           className="w-[85%] h-auto object-contain relative z-10"
         />
