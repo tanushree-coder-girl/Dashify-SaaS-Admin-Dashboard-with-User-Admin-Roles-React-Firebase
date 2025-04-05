@@ -13,6 +13,7 @@ const Help = lazy(() => import("@pages/help/Help"));
 const Bookings = lazy(() => import("@pages/bookings/Bookings"));
 const AdminUsers = lazy(() => import("@/pages/admin/UserManagement"));
 const AdminServices = lazy(() => import("@pages/admin/services/AdminServices"));
+const NotFound = lazy(() => import("@components/NotFound"));
 
 const routes: RouteObject[] = [
   {
@@ -53,6 +54,10 @@ const routes: RouteObject[] = [
       { path: "profile", element: <Profile /> },
       { path: "help", element: <Help /> },
     ],
+  },
+  {
+    path: "*",
+    element: <NotFound />,
   },
 ];
 
