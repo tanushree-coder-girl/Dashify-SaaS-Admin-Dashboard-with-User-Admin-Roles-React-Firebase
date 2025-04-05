@@ -19,8 +19,8 @@ const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
     <div
       className="min-h-screen"
       style={{
-        background: themes[theme].backgroundColor,
-        color: themes[theme].textColor,
+        background: themes[theme]?.backgroundColor,
+        color: themes[theme]?.textColor,
       }}
     >
       {children}

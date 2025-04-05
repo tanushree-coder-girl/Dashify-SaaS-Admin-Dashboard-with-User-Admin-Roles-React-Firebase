@@ -7,7 +7,6 @@
   --surface-color: #121212;
   --primary-color: linear-gradient(45deg, #ff00ff, #cc00cc, #00ffff, #00cccc);
   --secondary-color: linear-gradient(45deg, #ff00ff, #cc00cc, #00ffff, #00cccc);
-
   --text-secondary-color: linear-gradient(
     45deg,
     #00ffff,
@@ -20,6 +19,9 @@
   --error-color: #ff4d4d;
   --success-color: #00c853;
   --font-family: "Inter", "Poppins", sans-serif;
+  --diagram-color1: "#62cff4";
+  --diagram-color2: "2c67f2";
+  --diagram-color3: "2c67f2";
 }
 
 /* ✅ Apply Font Globally */

@@ -4,16 +4,14 @@ import {
   fetchBookings,
   cancelBooking,
   updateBookingStatus,
-  fetchPaymentStatus, // ✅ Payment Status API Add Kiya
+  fetchPaymentStatus,
 } from "@services/bookingsApi";
 import InputField from "@/components/TextField";
 import CustomPagination from "@components/Pagination";
 import CustomSelect from "@components/CustomSelect";
 import Modal from "@components/Modal";
 import BookingForm from "@pages/bookings/components/BookingForm";
-import { FaExclamationCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import LoadingSpinner from "@components/LoadingSpinner";
 import CommonTable from "@/components/CommonTable";
 
 const ITEMS_PER_PAGE = 5;
@@ -126,21 +124,18 @@ const BookingTable: React.FC<BookingTableProps> = ({ isAdmin, userId }) => {
       <CommonTable
         columns={["Service Name", "Category", "Price", "Status", "Actions"]}
         rows={paginatedBookings.map((booking: Booking) => (
-          <tr
-            key={booking.id}
-            className="hover:bg-[var(--primary-hover-color)] transition-all"
-          >
+          <tr key={booking.id} className="transition-all">
             <td className="p-3 border theme-border">{booking.serviceTitle}</td>
             <td className="p-3 border theme-border">{booking.category}</td>
             <td className="p-3 border theme-border">${booking.price}</td>
             <td className="p-3 border theme-border">
               <span
-                className={`px-2 py-1 rounded-md text-white text-sm ${
+                className={`px-2 py-1 rounded-md text-theme text-sm ${
                   booking.status === "Approved"
-                    ? "bg-green-500"
+                    ? "bg-success"
                     : booking.status === "Pending"
-                    ? "bg-yellow-500"
-                    : "bg-red-500"
+                    ? "bg-secondary"
+                    : "bg-error"
                 }`}
               >
                 {booking.status}
@@ -149,7 +144,7 @@ const BookingTable: React.FC<BookingTableProps> = ({ isAdmin, userId }) => {
             <td className="p-3 border theme-border">
               {!isAdmin && booking.status === "Pending" && (
                 <button
-                  className="text-red-500"
+                  className="text-error"
                   onClick={() => cancelMutation.mutate(booking.id)}
                 >
                   Cancel
@@ -160,7 +155,7 @@ const BookingTable: React.FC<BookingTableProps> = ({ isAdmin, userId }) => {
                 !paymentStatuses[booking.id] && (
                   <button
                     onClick={() => navigate("/dashboard/payments")}
-                    className="bg-blue-500 text-white px-2 py-1 rounded ml-2"
+                    className="bg-blue-500 text-theme px-2 py-1 rounded ml-2"
                   >
                     Pay Now
                   </button>
@@ -168,7 +163,7 @@ const BookingTable: React.FC<BookingTableProps> = ({ isAdmin, userId }) => {
               {isAdmin && booking.status === "Pending" && (
                 <>
                   <button
-                    className="bg-green-500 text-white px-2 py-1 rounded ml-2"
+                    className="bg-success text-theme px-2 py-1 rounded ml-2"
                     onClick={() =>
                       updateStatusMutation.mutate({
                         bookingId: booking.id,
@@ -182,7 +177,7 @@ const BookingTable: React.FC<BookingTableProps> = ({ isAdmin, userId }) => {
                     Approve
                   </button>
                   <button
-                    className="bg-red-500 text-white px-2 py-1 rounded ml-2"
+                    className="bg-error text-theme px-2 py-1 rounded ml-2"
                     onClick={() =>
                       updateStatusMutation.mutate({
                         bookingId: booking.id,

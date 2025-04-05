@@ -94,8 +94,8 @@ const ServiceTable: React.FC = () => {
             <td className="p-3 border theme-border">${service.price}</td>
             <td className="p-3 border theme-border">
               <span
-                className={`px-2 py-1 rounded-md text-white text-sm ${
-                  service.status === "Active" ? "bg-green-500" : "bg-red-500"
+                className={`px-2 py-1 rounded-md text-theme text-sm ${
+                  service.status === "Active" ? "bg-success" : "bg-error"
                 }`}
               >
                 {service.status}
@@ -103,7 +103,7 @@ const ServiceTable: React.FC = () => {
             </td>
             <td className="p-3 border theme-border">
               <button
-                className="text-blue-500 mr-2"
+                className="text-primary mr-2"
                 onClick={() => {
                   setSelectedService(service);
                   setModalOpen(true);
@@ -112,7 +112,7 @@ const ServiceTable: React.FC = () => {
                 Edit
               </button>
               <button
-                className="text-red-500"
+                className="text-error"
                 onClick={() => deleteMutation.mutate(service.id)}
               >
                 Delete

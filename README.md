@@ -1,54 +1,62 @@
-# React + TypeScript + Vite
+# 🚀 Dashify – SaaS Admin Dashboard with User & Admin Roles (React + Firebase)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Dashify is a modern, responsive SaaS admin dashboard built with **Vite**, **React**, **TypeScript**, **Tailwind CSS**, and **Firebase**.  
+It supports **multi-role access** (Admin & User), built-in **auth**, and **service management** — perfect for scalable SaaS products.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Features
 
-## Expanding the ESLint configuration
+- 🔐 **Firebase Authentication**
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+  - Email/Password login
+  - Google Sign-In
+  - Forgot Password
+  - User Registration
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+- 👥 **Multi-Role Support**
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+  - **Admin:** Can create, edit, and delete services
+  - **User:** Can view and book services
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- ⚙️ **State Management**
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+  - Powered by **Zustand**
+
+- 📦 **Firebase Firestore**
+
+  - Real-time database for users, services & bookings
+
+- 🎨 **Modern UI**
+  - Tailwind CSS with a clean, responsive layout
+
+---
+
+## 🛠️ Tech Stack
+
+- ⚛️ React + Vite
+- 🟦 TypeScript
+- 🎨 Tailwind CSS
+- 🔥 Firebase Auth & Firestore
+- 🧠 Zustand (State Management)
+- 🧩 React Router DOM (Routing)
+- 🛡️ Role Guards (Custom route protection)
+
+---
+
+## 🚀 Getting Started
+
+```bash
+# 1. Clone the repo
+git clone https://github.com/your-username/dashify.git
+
+# 2. Install dependencies
+cd dashify
+npm install   # or yarn / pnpm
+
+# 3. Add your Firebase config
+# Create a .env file with your Firebase credentials
+
+# 4. Start the dev server
+npm run dev
 ```

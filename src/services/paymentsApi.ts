@@ -14,7 +14,7 @@ interface Payment {
   userId: string;
   serviceTitle: string;
   price: number;
-  paymentStatus: "Pending" | "Completed";
+  paymentStatus: "Pending" | "Completed" | "Failed";
 }
 
 // ✅ **Payments Collection Reference**

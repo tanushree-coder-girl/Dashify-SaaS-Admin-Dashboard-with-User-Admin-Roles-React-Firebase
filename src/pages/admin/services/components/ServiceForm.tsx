@@ -71,43 +71,49 @@ const ServiceForm: React.FC<ServiceFormProps> = ({ onClose, initialData }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-      <InputField
-        id="title"
-        type="text"
-        placeholder="Enter service name"
-        register={register as unknown as UseFormRegister<any>} // 🛠 Fix register type issue
-      />
-      <InputField
-        id="category"
-        type="text"
-        placeholder="Enter category"
-        register={register as unknown as UseFormRegister<any>} // 🛠 Fix register type issue
-      />
-      <InputField
-        id="price"
-        type="number"
-        placeholder="Enter price"
-        register={register as unknown as UseFormRegister<any>} // 🛠 Fix register type issue
-      />
+    <>
+      <h2 className="text-lg font-semibold mb-4">
+        {initialData ? "Edit Service" : "Add New Service"}
+      </h2>
 
-      <button
-        type="submit"
-        className="bg-primary text-white px-4 py-2 rounded-md w-full hover:bg-primary-dark transition flex justify-center items-center"
-        disabled={isSubmitting} // Disable button while submitting
-      >
-        {isSubmitting ? (
-          <span className="flex items-center">
-            <FaSpinner className="animate-spin mr-2" />
-            Processing...
-          </span>
-        ) : initialData ? (
-          "Update Service"
-        ) : (
-          "Add Service"
-        )}
-      </button>
-    </form>
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <InputField
+          id="title"
+          type="text"
+          placeholder="Enter service name"
+          register={register as unknown as UseFormRegister<any>} // 🛠 Fix register type issue
+        />
+        <InputField
+          id="category"
+          type="text"
+          placeholder="Enter category"
+          register={register as unknown as UseFormRegister<any>} // 🛠 Fix register type issue
+        />
+        <InputField
+          id="price"
+          type="number"
+          placeholder="Enter price"
+          register={register as unknown as UseFormRegister<any>} // 🛠 Fix register type issue
+        />
+
+        <button
+          type="submit"
+          className="bg-primary text-theme px-4 py-2 rounded-md w-full hover:bg-primary-dark transition flex justify-center items-center"
+          disabled={isSubmitting} // Disable button while submitting
+        >
+          {isSubmitting ? (
+            <span className="flex items-center">
+              <FaSpinner className="animate-spin mr-2" />
+              Processing...
+            </span>
+          ) : initialData ? (
+            "Update Service"
+          ) : (
+            "Add Service"
+          )}
+        </button>
+      </form>
+    </>
   );
 };
 

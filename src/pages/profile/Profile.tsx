@@ -100,24 +100,24 @@ const Profile: React.FC = () => {
             <div className="relative w-32 h-32">
               {userData?.profilePic ? (
                 <img
-                  className="w-32 h-32 object-cover rounded-full border-4 border-gray-300 shadow-md"
+                  className="w-32 h-32 object-cover rounded-full theme-border shadow-md"
                   src={userData.profilePic}
                   alt="Profile"
                 />
               ) : (
-                <div className="w-32 h-32 flex items-center justify-center bg-gray-300 text-white text-4xl font-bold rounded-full border-4 border-gray-300 shadow-md">
+                <div className="w-32 h-32 flex items-center justify-center bg-theme text-theme text-4xl font-bold rounded-full theme-border shadow-md">
                   {getInitials(userData?.name || "User")}
                 </div>
               )}
 
               <label
                 htmlFor="upload"
-                className="absolute bottom-2 right-2 bg-[var(--primary-color)] p-2 rounded-full cursor-pointer shadow-md"
+                className="absolute bottom-2 right-2 bg-primary p-2 rounded-full cursor-pointer shadow-md"
               >
                 {uploading ? (
-                  <Loader size={18} className="animate-spin text-white" />
+                  <Loader size={18} className="animate-spin text-theme" />
                 ) : (
-                  <Camera size={18} className="text-white" />
+                  <Camera size={18} className="text-theme" />
                 )}
               </label>
               <input
@@ -131,15 +131,13 @@ const Profile: React.FC = () => {
             <h3 className="text-xl font-bold mt-4">
               {userData?.name || "N/A"}
             </h3>
-            <p className="text-sm text-[var(--text-secondary-color)]">
-              {userData?.email || "N/A"}
-            </p>
+            <p className="text-sm text-secondary">{userData?.email || "N/A"}</p>
 
             <span className="px-3 mt-2 text-sm rounded-full bg-primary text-theme p-2">
               Role: {userData?.role || "User"}
             </span>
 
-            <div className="mt-4 w-full space-y-2 text-left text-sm text-[var(--text-secondary-color)]">
+            <div className="mt-4 w-full space-y-2 text-left text-sm text-secondary">
               <div className="flex justify-between">
                 <strong>Address:</strong>
                 <span>{userData?.address || "N/A"}</span>

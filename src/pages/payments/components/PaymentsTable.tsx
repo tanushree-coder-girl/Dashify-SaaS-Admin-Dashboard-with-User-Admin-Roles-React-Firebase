@@ -79,18 +79,15 @@ const PaymentsTable: React.FC<PaymentsTableProps> = ({ isAdmin, userId }) => {
             : ["Service Name", "Price", "Payment Status", "Actions"]
         }
         rows={paginatedPayments.map((payment: any) => (
-          <tr
-            key={payment.id}
-            className="hover:bg-[var(--primary-hover-color)] transition-all"
-          >
+          <tr key={payment.id} className="transition-all">
             <td className="p-3 border theme-border">{payment.serviceTitle}</td>
             <td className="p-3 border theme-border">${payment.price}</td>
             <td className="p-3 border theme-border">
               <span
-                className={`px-2 py-1 rounded-md text-white text-sm ${
+                className={`px-2 py-1 rounded-md text-theme text-sm ${
                   payment.paymentStatus === "Completed"
-                    ? "bg-green-500"
-                    : "bg-yellow-500"
+                    ? "bg-success"
+                    : "bg-error"
                 }`}
               >
                 {payment.paymentStatus}
@@ -102,7 +99,7 @@ const PaymentsTable: React.FC<PaymentsTableProps> = ({ isAdmin, userId }) => {
                   payment.paymentStatus === "Pending" && (
                     <button
                       onClick={() => handleOpenPaymentModal(payment.id)}
-                      className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition"
+                      className="bg-primary text-theme px-4 py-2 rounded-md transition"
                     >
                       Pay Now
                     </button>

@@ -18,18 +18,18 @@ const InputField: React.FC<InputFieldProps> = ({
       <input
         type={type}
         id={id}
-        className="peer p-3 pt-5 border rounded-md w-full border-[var(--secondary-color)] 
-                     bg-[var(--input-bg)] text-theme focus:ring-2 
-                     focus:ring-[var(--primary-color)] outline-none"
+        className="peer p-3 pt-5 rounded-md w-full theme-border 
+                      text-theme focus:ring-2 bg-theme
+                     focus:ring-[var(--diagram-color1)] outline-none"
         value={value}
         onChange={onChange}
       />
       <label
         htmlFor={id}
-        className={`absolute left-3 text-gray-400 text-sm transition-all ${
+        className={`absolute left-3 text-secondary text-sm transition-all ${
           value
-            ? "top-2 text-[var(--primary-color)]"
-            : "top-5 text-base peer-placeholder-shown:top-5"
+            ? "top-2 text-primary"
+            : "top-5 text-secondary peer-placeholder-shown:top-5"
         }`}
       >
         {placeholder}

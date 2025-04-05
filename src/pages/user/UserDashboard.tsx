@@ -36,12 +36,9 @@ interface ServiceData {
   activeServices: string[];
 }
 
-const COLORS = ["#10B981", "#FACC15", "#EF4444"];
-
 const UserDashboard = () => {
   const { user } = useAuth();
 
-  // ✅ Initialize states with correct TypeScript types
   const [bookingsData, setBookingsData] = useState<BookingData | null>(null);
   const [paymentsData, setPaymentsData] = useState<PaymentData | null>(null);
   const [activeServices, setActiveServices] = useState<string[]>([]);
@@ -73,7 +70,7 @@ const UserDashboard = () => {
     fetchData();
   }, [user]);
 
-  // ✅ Ensure data is available before using it
+  // ✅ Chart Data for Payments
   const paymentChartData =
     paymentsData !== null
       ? [
@@ -83,13 +80,13 @@ const UserDashboard = () => {
         ]
       : [];
 
-  const activeServicesData =
-    activeServices.length > 0
-      ? activeServices.map((service) => ({
-          name: service,
-          count: 1,
-        }))
-      : [];
+  // ✅ Group and count active services for BarChart
+  const activeServicesData = Object.entries(
+    activeServices.reduce((acc: Record<string, number>, service) => {
+      acc[service] = (acc[service] || 0) + 1;
+      return acc;
+    }, {})
+  ).map(([name, count]) => ({ name, count }));
 
   return (
     <div>
@@ -101,9 +98,7 @@ const UserDashboard = () => {
       {loading ? (
         <LoadingSpinner />
       ) : error ? (
-        <p className="text-center text-lg font-semibold text-red-500">
-          {error}
-        </p>
+        <p className="text-center text-lg font-semibold text-error">{error}</p>
       ) : (
         <>
           {/* 📊 Key Stats */}
@@ -112,29 +107,29 @@ const UserDashboard = () => {
               {
                 label: "Total Bookings",
                 value: bookingsData?.totalBookings ?? 0,
-                color: "var(--primary-color)",
+                color: "text-primary",
               },
               {
                 label: "Pending Bookings",
                 value: bookingsData?.pendingBookings ?? 0,
-                color: "var(--warning-color)",
+                color: "text-secondary",
               },
               {
                 label: "Approved Bookings",
                 value: bookingsData?.approvedBookings ?? 0,
-                color: "var(--success-color)",
+                color: "text-success",
               },
               {
                 label: "Rejected Bookings",
                 value: bookingsData?.rejectedBookings ?? 0,
-                color: "red",
+                color: "text-error",
               },
             ].map((stat, index) => (
               <div key={index} className="bg-surface p-4 rounded-lg shadow-lg">
                 <h2 className="text-lg font-semibold text-theme">
                   {stat.label}
                 </h2>
-                <p className="text-2xl font-bold" style={{ color: stat.color }}>
+                <p className={`text-2xl font-bold ${stat.color}`}>
                   {stat.value}
                 </p>
               </div>
@@ -164,10 +159,16 @@ const UserDashboard = () => {
                         dataKey="value"
                         label
                       >
-                        {paymentChartData.map((entry, index) => (
+                        {paymentChartData.map((_entry, index) => (
                           <Cell
                             key={`cell-${index}`}
-                            fill={COLORS[index % COLORS.length]}
+                            fill={
+                              index === 0
+                                ? "var(--diagram-color1)"
+                                : index === 1
+                                ? "var(--diagram-color2)"
+                                : "var(--diagram-color3)"
+                            }
                           />
                         ))}
                       </Pie>
@@ -177,7 +178,7 @@ const UserDashboard = () => {
                   </ResponsiveContainer>
                 </div>
               ) : (
-                <p className="text-gray-500 mt-4">No Payment Data Available</p>
+                <p className="text-secondary mt-4">No Payment Data Available</p>
               )}
             </div>
 
@@ -187,20 +188,40 @@ const UserDashboard = () => {
                 Active Services
               </h2>
 
-              {activeServices.length > 0 ? (
+              {activeServicesData.length > 0 ? (
                 <div className="w-full h-60 mt-4">
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={activeServicesData}>
+                      <defs>
+                        <linearGradient
+                          id="primaryGradient"
+                          x1="0"
+                          y1="0"
+                          x2="0"
+                          y2="1"
+                        >
+                          <stop
+                            offset="5%"
+                            stopColor="var(--diagram-color1)"
+                            stopOpacity={1}
+                          />
+                          <stop
+                            offset="95%"
+                            stopColor="var(--diagram-color2)"
+                            stopOpacity={1}
+                          />
+                        </linearGradient>
+                      </defs>
                       <CartesianGrid strokeDasharray="3 3" />
                       <XAxis dataKey="name" />
                       <YAxis allowDecimals={false} />
                       <Tooltip />
-                      <Bar dataKey="count" fill="var(--primary-color)" />
+                      <Bar dataKey="count" fill="url(#primaryGradient)" />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>
               ) : (
-                <p className="text-gray-500 mt-4">No Active Services</p>
+                <p className="text-secondary mt-4">No Active Services</p>
               )}
             </div>
           </div>

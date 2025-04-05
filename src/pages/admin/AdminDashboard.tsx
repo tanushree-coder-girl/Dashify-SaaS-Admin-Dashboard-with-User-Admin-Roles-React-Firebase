@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import PageHeader from "@components/PageHeader";
-import useThemeStore, { themes } from "@store/themeStore";
 import {
   BarChart,
   Bar,
@@ -51,8 +50,6 @@ interface ServiceData {
 
 // ✅ Functional Component with TypeScript
 const AdminDashboard = () => {
-  const { theme } = useThemeStore();
-  const currentTheme = themes[theme];
   const { user } = useAuth();
 
   const [usersData, setUsersData] = useState<UserData | null>(null);
@@ -95,9 +92,7 @@ const AdminDashboard = () => {
       {loading ? (
         <LoadingSpinner />
       ) : error ? (
-        <p className="text-center text-lg font-semibold text-red-500">
-          {error}
-        </p>
+        <p className="text-center text-lg font-semibold text-error">{error}</p>
       ) : (
         <>
           {/* Metrics */}
@@ -110,7 +105,7 @@ const AdminDashboard = () => {
             </div>
             <div className="bg-surface p-4 rounded-lg shadow-lg">
               <h2 className="text-lg font-semibold text-theme">Revenue</h2>
-              <p className="text-2xl font-bold text-primary">
+              <p className="text-2xl font-bold text-theme">
                 ${paymentsData?.totalRevenue ?? 0}
               </p>
             </div>
@@ -118,7 +113,7 @@ const AdminDashboard = () => {
               <h2 className="text-lg font-semibold text-theme">
                 Total Bookings
               </h2>
-              <p className="text-2xl font-bold text-primary">
+              <p className="text-2xl font-bold text-theme">
                 {bookingsData?.totalBookings ?? 0}
               </p>
             </div>
@@ -126,9 +121,7 @@ const AdminDashboard = () => {
               <h2 className="text-lg font-semibold text-theme">
                 Total Services
               </h2>
-              <p className="text-2xl font-bold text-primary">
-                {services.length}
-              </p>
+              <p className="text-2xl font-bold text-theme">{services.length}</p>
             </div>
           </div>
 
@@ -149,15 +142,32 @@ const AdminDashboard = () => {
                         ).length ?? 0,
                     }))}
                   >
-                    <CartesianGrid
-                      strokeDasharray="3 3"
-                      stroke="theme-border"
-                    />
+                    <defs>
+                      <linearGradient
+                        id="primaryGradient"
+                        x1="0"
+                        y1="0"
+                        x2="0"
+                        y2="1"
+                      >
+                        <stop
+                          offset="5%"
+                          stopColor="var(--diagram-color1)"
+                          stopOpacity={1}
+                        />
+                        <stop
+                          offset="95%"
+                          stopColor="var(--diagram-color2)"
+                          stopOpacity={1}
+                        />
+                      </linearGradient>
+                    </defs>
+                    <CartesianGrid strokeDasharray="3 3" stroke="text-theme" />
                     <XAxis dataKey="name" stroke="var(--text-color)" />
                     <YAxis stroke="var(--text-color)" />
                     <Tooltip />
                     <Legend />
-                    <Bar dataKey="bookings" fill="var(--primary-color)" />
+                    <Bar dataKey="bookings" fill="url(#primaryGradient)" />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
@@ -183,7 +193,10 @@ const AdminDashboard = () => {
                     ]}
                   >
                     <PolarGrid />
-                    <PolarAngleAxis dataKey="subject" stroke="orange" />
+                    <PolarAngleAxis
+                      dataKey="subject"
+                      stroke="var(--diagram-color1)"
+                    />
                     <PolarRadiusAxis
                       angle={30}
                       domain={[
@@ -197,8 +210,8 @@ const AdminDashboard = () => {
                     <Radar
                       name="User Status"
                       dataKey="A"
-                      stroke="text-blue-500"
-                      fill="blue"
+                      stroke="text-primary"
+                      fill="var(--diagram-color1)"
                       fillOpacity={0.6}
                     />
                     <Tooltip />

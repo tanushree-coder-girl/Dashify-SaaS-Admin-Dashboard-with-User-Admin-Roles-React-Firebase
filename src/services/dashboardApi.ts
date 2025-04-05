@@ -55,7 +55,7 @@ export const fetchUsers = async (): Promise<{
     totalUsers: users.length,
     activeUsers: users.filter((user) => user.status).length,
     inactiveUsers: users.filter((user) => !user.status).length,
-    users, // Raw Data
+    users,
   };
 };
 
@@ -87,7 +87,7 @@ export const fetchBookings = async (): Promise<{
     rejectedBookings: bookings.filter((b) => b.status === "Rejected").length,
     completedBookings: bookings.filter((b) => b.status === "Approved").length,
     pendingBookings: bookings.filter((b) => b.status === "Pending").length,
-    bookings, // Raw Data
+    bookings,
   };
 };
 
@@ -108,6 +108,6 @@ export const fetchPayments = async (): Promise<{
 
   return {
     totalRevenue,
-    payments, // Raw Data
+    payments,
   };
 };

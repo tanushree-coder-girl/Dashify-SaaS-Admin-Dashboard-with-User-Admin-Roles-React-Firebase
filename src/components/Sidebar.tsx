@@ -10,11 +10,13 @@ import {
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "@context/AuthContext";
 import logo from "@assets/images/dashify_logo.png";
+import useThemeStore from "@store/themeStore";
 
 const Sidebar: React.FC = () => {
   const { user } = useAuth();
   const isAdmin = user?.role === "admin";
   const navigate = useNavigate();
+  const { theme } = useThemeStore();
 
   const navLinks = [
     {
@@ -74,7 +76,7 @@ const Sidebar: React.FC = () => {
         <img
           src={logo}
           alt="Logo"
-          style={{ filter: "invert(1)" }}
+          style={{ filter: `invert(${theme.includes("light") ? 0 : 1})` }}
           className="w-32 h-auto"
         />
       </h2>

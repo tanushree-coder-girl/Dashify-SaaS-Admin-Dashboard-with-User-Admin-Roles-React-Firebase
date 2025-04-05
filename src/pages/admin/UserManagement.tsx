@@ -9,8 +9,6 @@ import PageHeader from "@components/PageHeader";
 import InputField from "@/components/TextField";
 import CustomPagination from "@components/Pagination";
 import CustomSelect from "@components/CustomSelect";
-import { FaExclamationCircle } from "react-icons/fa";
-import LoadingSpinner from "@components/LoadingSpinner";
 import CommonTable from "@/components/CommonTable";
 
 const ITEMS_PER_PAGE = 5;
@@ -127,7 +125,7 @@ const UserManagement: React.FC = () => {
               </td>
               <td className="p-3 border theme-border">
                 <span
-                  className={`px-2 py-1 rounded-md text-white text-sm ${
+                  className={`px-2 py-1 rounded-md text-theme text-sm ${
                     user.status ? "bg-success" : "bg-error"
                   }`}
                 >

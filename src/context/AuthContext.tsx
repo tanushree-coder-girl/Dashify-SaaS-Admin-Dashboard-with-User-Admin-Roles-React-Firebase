@@ -149,7 +149,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         email: user.email || "",
         role: userSnap.data()?.role || "user",
         created_at: userSnap.data()?.created_at || new Date(),
-        status: userSnap.data()?.role || true,
+        status: userSnap.data()?.status || true,
       };
 
       setUser(userData);

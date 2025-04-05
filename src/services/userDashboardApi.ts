@@ -34,9 +34,15 @@ export const fetchUserPayments = async (userId: string) => {
     .reduce((acc, p) => acc + (Number(p.price) || 0), 0);
 
   // ✅ Count Payment Statuses
-  const completedPayments = payments.filter((p) => p.paymentStatus === "Completed").length;
-  const pendingPayments = payments.filter((p) => p.paymentStatus === "Pending").length;
-  const failedPayments = payments.filter((p) => p.paymentStatus === "Failed").length;
+  const completedPayments = payments.filter(
+    (p) => p.paymentStatus === "Completed"
+  ).length;
+  const pendingPayments = payments.filter(
+    (p) => p.paymentStatus === "Pending"
+  ).length;
+  const failedPayments = payments.filter(
+    (p) => p.paymentStatus === "Failed"
+  ).length;
 
   return {
     totalSpent,

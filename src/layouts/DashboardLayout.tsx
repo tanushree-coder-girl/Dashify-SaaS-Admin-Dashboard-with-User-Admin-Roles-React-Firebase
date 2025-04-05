@@ -59,7 +59,7 @@ const DashboardLayout: React.FC = () => {
 
       {/* Content Area */}
       <div
-        className={`flex flex-col flex-grow transition-all duration-300
+        className={`flex flex-col flex-grow transition-all duration-300 
         ${isSidebarOpen ? "md:ml-64 md:w-[calc(100% - 64px)]" : "ml-0 w-full"}`}
       >
         <div

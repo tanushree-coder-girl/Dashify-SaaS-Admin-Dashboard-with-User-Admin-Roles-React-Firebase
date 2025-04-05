@@ -36,7 +36,7 @@ export const uploadProfileImage = async (userId: string, file: File) => {
       try {
         const base64String = reader.result as string;
         const userRef = doc(db, "users", userId);
-        await updateDoc(userRef, { profilePic: base64String }); // Firestore में Save करो
+        await updateDoc(userRef, { profilePic: base64String });
         resolve(base64String);
       } catch (error) {
         console.error("Error uploading profile picture:", error);

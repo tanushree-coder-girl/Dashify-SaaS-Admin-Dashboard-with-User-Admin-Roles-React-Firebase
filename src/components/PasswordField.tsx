@@ -21,14 +21,14 @@ const PasswordField: React.FC<PasswordFieldProps> = ({
     <div className="relative">
       <InputField
         id={id}
-        type={showPassword ? "text" : "password"} // 🔥 FIX: Explicitly passing type
+        type={showPassword ? "text" : "password"}
         placeholder={placeholder}
         value={value}
         onChange={onChange}
       />
       <button
         type="button"
-        className="absolute right-3 top-4 text-gray-500 hover:text-primary"
+        className="absolute right-3 top-4 text-secondary"
         onClick={() => setShowPassword(!showPassword)}
       >
         {showPassword ? "🙈" : "👁️"}

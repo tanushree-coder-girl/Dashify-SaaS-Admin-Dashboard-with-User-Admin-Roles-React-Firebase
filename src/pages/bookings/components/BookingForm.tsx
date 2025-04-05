@@ -63,7 +63,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ onClose, userId }) => {
       />
 
       <button
-        className="bg-primary text-white px-4 py-2 mt-4 rounded-md w-full"
+        className="bg-primary text-theme px-4 py-2 mt-4 rounded-md w-full"
         onClick={handleBookService}
         disabled={!selectedService || bookingMutation.isLoading}
       >

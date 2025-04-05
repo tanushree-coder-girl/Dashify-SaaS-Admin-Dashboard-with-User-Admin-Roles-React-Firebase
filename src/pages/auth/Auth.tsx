@@ -2,9 +2,11 @@ import { useState } from "react";
 import ThemeSwitcher from "@components/ThemeSwitcher";
 import AuthForm from "@pages/auth/AuthForm";
 import logo from "@assets/images/dashify_logo.png";
+import useThemeStore from "@/store/themeStore";
 
 const Auth: React.FC = () => {
   const [isLogin, setIsLogin] = useState<boolean>(true);
+  const { theme } = useThemeStore();
 
   return (
     <div className="flex flex-col md:flex-row h-screen bg-theme text-theme">
@@ -13,7 +15,7 @@ const Auth: React.FC = () => {
           <img
             src={logo}
             alt="Logo"
-            style={{ filter: "invert(1)" }}
+            style={{ filter: `invert(${theme.includes("light") ? 0 : 1})` }}
             className="w-36 h-auto"
           />
         </div>

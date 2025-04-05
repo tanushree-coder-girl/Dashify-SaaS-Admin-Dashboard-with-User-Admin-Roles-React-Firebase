@@ -8,7 +8,6 @@ import {
   query,
   where,
   updateDoc,
-  setDoc,
 } from "firebase/firestore";
 
 interface Booking {
@@ -57,7 +56,6 @@ export const updateBookingStatus = async ({
   await updateDoc(bookingRef, { status });
 
   if (status === "Approved") {
-    // ✅ **Agar Approved Hai To Payment Table Me Store Karo**
     const paymentsCollection = collection(db, "payments");
     await addDoc(paymentsCollection, {
       bookingId,
@@ -69,7 +67,6 @@ export const updateBookingStatus = async ({
   }
 };
 
-// ✅ Check if payment is completed for a booking
 export const fetchPaymentStatus = async (
   bookingId: string
 ): Promise<boolean> => {
@@ -81,5 +78,5 @@ export const fetchPaymentStatus = async (
   );
   const snapshot = await getDocs(q);
 
-  return !snapshot.empty; // अगर कोई "Completed" पेमेंट मिली, तो true return करो
+  return !snapshot.empty;
 };

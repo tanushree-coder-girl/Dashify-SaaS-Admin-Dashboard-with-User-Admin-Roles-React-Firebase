@@ -1,7 +1,9 @@
 import { useState } from "react";
 import InputField from "@/components/TextField";
 import { updatePaymentStatus } from "@services/paymentsApi";
-import { useQueryClient } from "@tanstack/react-query"; // ✅ Yeh import karo
+import { useQueryClient } from "@tanstack/react-query";
+import PrimaryButton from "@/components/PrimaryButton";
+import { toast } from "react-toastify";
 
 interface PaymentFormProps {
   paymentId: string | null;
@@ -10,17 +12,16 @@ interface PaymentFormProps {
 
 const PaymentForm: React.FC<PaymentFormProps> = ({ paymentId, onClose }) => {
   const [cardNumber, setCardNumber] = useState("");
-  const queryClient = useQueryClient(); // ✅ Query Client initialize karo
+  const queryClient = useQueryClient();
 
   const handleProceed = async () => {
+    if (!cardNumber) return toast.error("Please fill card number");
     if (!paymentId) return;
 
     try {
-      await updatePaymentStatus(paymentId); // ✅ Payment status update karega Firestore mein
-      console.log(`Payment successful for ID: ${paymentId}`);
-
-      queryClient.invalidateQueries({ queryKey: ["payments"] }); // ✅ Yeh payments table ko refresh karega
-      onClose(); // ✅ Modal ko close karega
+      await updatePaymentStatus(paymentId);
+      queryClient.invalidateQueries({ queryKey: ["payments"] });
+      onClose();
     } catch (error) {
       console.error("Payment failed:", error);
     }
@@ -37,12 +38,9 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ paymentId, onClose }) => {
         onChange={(e) => setCardNumber(e.target.value)}
       />
 
-      <button
-        onClick={handleProceed}
-        className="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md"
-      >
+      <PrimaryButton onClick={handleProceed} className="mt-4 w-full">
         Proceed
-      </button>
+      </PrimaryButton>
     </div>
   );
 };

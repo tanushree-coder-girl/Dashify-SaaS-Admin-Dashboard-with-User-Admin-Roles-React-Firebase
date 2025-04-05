@@ -24,7 +24,6 @@ const AdminServices = () => {
 
       {/* Add Service Modal */}
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        <h2 className="text-lg font-semibold mb-4">Add New Service</h2>
         <ServiceForm onClose={() => setIsModalOpen(false)} />
       </Modal>
     </div>

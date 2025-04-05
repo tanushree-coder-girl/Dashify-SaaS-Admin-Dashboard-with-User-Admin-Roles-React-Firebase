@@ -23,7 +23,7 @@ const BookingsPage = () => {
         />
         {!isAdmin && (
           <button
-            className="bg-primary text-white px-4 py-2 rounded-md self-start md:self-center"
+            className="bg-primary text-theme px-4 py-2 rounded-md self-start md:self-center"
             onClick={() => setIsModalOpen(true)}
           >
             + Book a Service
