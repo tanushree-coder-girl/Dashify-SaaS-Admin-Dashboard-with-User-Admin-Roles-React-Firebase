@@ -33,7 +33,7 @@ const CustomSelect: React.FC<{
   return (
     <div className={`relative inline-block ${className}`} ref={dropdownRef}>
       <button
-        className="min-w-[100px] max-w-full truncate px-4 py-3 theme-border rounded-md text-theme focus:outline-none focus:ring-2 transition-all text-left"
+        className={`min-w-[100px] max-w-full truncate px-4 py-3 theme-border rounded-md text-theme focus:outline-none focus:ring-2 transition-all text-left ${className}`}
         onClick={toggleDropdown}
       >
         {value}

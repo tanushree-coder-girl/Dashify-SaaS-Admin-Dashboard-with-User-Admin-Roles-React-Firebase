@@ -3,6 +3,8 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { addBooking } from "@services/bookingsApi";
 import CustomSelect from "@components/CustomSelect";
 import { fetchServices } from "@services/servicesApi";
+import PrimaryButton from "@/components/PrimaryButton";
+import { toast } from "react-toastify";
 
 interface BookingFormProps {
   onClose: () => void;
@@ -44,7 +46,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ onClose, userId }) => {
   });
 
   const handleBookService = () => {
-    if (!selectedService) return;
+    if (!selectedService) return toast.error("Select service to book");
     bookingMutation.mutate();
   };
 
@@ -60,14 +62,16 @@ const BookingForm: React.FC<BookingFormProps> = ({ onClose, userId }) => {
             services.find((service) => service.title === title) || null
           )
         }
+        className="min-w-full w-full mb-2"
       />
 
-      <button
-        className="bg-primary text-theme px-4 py-2 mt-4 rounded-md w-full"
+      <PrimaryButton
         onClick={handleBookService}
+        type="button"
+        disabled={bookingMutation?.isPending}
       >
-        Book Now
-      </button>
+        {bookingMutation?.isPending ? "Processing.." : "Book Now"}
+      </PrimaryButton>
     </div>
   );
 };

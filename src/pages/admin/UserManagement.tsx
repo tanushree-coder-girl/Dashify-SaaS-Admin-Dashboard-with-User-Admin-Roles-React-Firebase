@@ -78,10 +78,7 @@ const UserManagement: React.FC = () => {
   return (
     <>
       {/* 🔹 Page Header */}
-      <PageHeader
-        title="Admin Users"
-        subtitle="Manage user roles and statuses"
-      />
+      <PageHeader title="Users" subtitle="Manage user roles and statuses" />
 
       <div className="bg-surface text-theme p-6 rounded-lg shadow-md overflow-hidden">
         {/* 🔹 Filters & Search */}

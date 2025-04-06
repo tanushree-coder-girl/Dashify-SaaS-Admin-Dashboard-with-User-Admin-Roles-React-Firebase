@@ -85,7 +85,7 @@ const AdminDashboard = () => {
   return (
     <div className="">
       <PageHeader
-        title={`Welcome ${user?.name || "Admin"}`}
+        title={`Hey ${user?.name || "Admin"}, Welcome Back!`}
         subtitle="Manage users, monitor activity, and analyze data."
       />
 

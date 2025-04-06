@@ -6,18 +6,16 @@ import ThemeSwitcher from "@components/ThemeSwitcher";
 
 const DashboardLayout: React.FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 998);
 
   // Handle screen size changes
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 998) {
-        setIsSidebarOpen(false); // Hide sidebar on small screens
-      } else {
-        setIsSidebarOpen(true); // Show sidebar on large screens
-      }
+      setIsMobile(window.innerWidth < 998);
+      setIsSidebarOpen(window.innerWidth >= 998);
     };
 
-    handleResize(); // Call on mount
+    handleResize(); // initial check
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -31,24 +29,25 @@ const DashboardLayout: React.FC = () => {
   };
 
   return (
-    <div className="flex h-screen bg-theme text-theme">
-      {/* Sidebar Area */}
+    <div className="flex h-screen bg-theme text-theme overflow-hidden">
+      {/* Sidebar */}
       <div
-        className={`fixed top-0 left-0 h-full w-64 z-40 transition-all duration-300 
-          ${isSidebarOpen ? "translate-x-0" : "-translate-x-64"}`}
+        className={`fixed top-0 left-0 h-full w-64 z-40 transition-transform duration-300 ease-in-out
+        ${isSidebarOpen ? "translate-x-0" : "-translate-x-64"}`}
       >
         <Sidebar />
       </div>
 
       {/* Overlay for mobile view */}
-      {isSidebarOpen && window.innerWidth < 998 && (
+      {isSidebarOpen && isMobile && (
         <div
           className="fixed top-0 left-0 right-0 bottom-0 bg-black opacity-50 z-30"
           onClick={closeSidebar}
         ></div>
       )}
 
-      {isSidebarOpen && window.innerWidth < 468 && (
+      {/* Close Button on small screens */}
+      {isSidebarOpen && isMobile && (
         <button
           onClick={closeSidebar}
           className="fixed top-4 right-8 z-50 text-theme text-xl theme-border w-12 h-12 rounded-full shadow-md bg-primary-hover hover:scale-110 transition-all duration-300 outline-none ring-2 ring-primary"
@@ -57,23 +56,23 @@ const DashboardLayout: React.FC = () => {
         </button>
       )}
 
-      {/* Content Area */}
+      {/* Main layout with Navbar + Main content */}
       <div
-        className={`flex flex-col flex-grow transition-all duration-300 
-        ${isSidebarOpen ? "md:ml-64 md:w-[calc(100% - 64px)]" : "ml-0 w-full"}`}
+        className={`flex flex-col flex-grow transition-all duration-300 ease-in-out ${
+          isSidebarOpen ? "md:ml-64" : ""
+        }`}
       >
+        {/* Navbar */}
         <div
-          className={`fixed top-0 left-0 right-0 z-20 transition-all duration-300 ${
-            isSidebarOpen ? "md:ml-64 md:w-[calc(100% - 64px)]" : "ml-0 w-full"
+          className={`fixed top-0 left-0 right-0 z-20 transition-all duration-300 ease-in-out ${
+            isSidebarOpen ? "md:ml-64" : ""
           }`}
         >
           <Navbar toggleSidebar={toggleSidebarHandler} />
         </div>
 
-        {/* Main Content */}
-        <main
-          className={`flex-grow bg-theme p-6 pt-20 mt-6 transition-all duration-300`}
-        >
+        {/* Main content */}
+        <main className="flex-grow bg-theme p-6 pt-20 mt-6 transition-all duration-300 ease-in-out overflow-auto">
           <Outlet />
         </main>
       </div>
