@@ -54,7 +54,7 @@ const PaymentsTable: React.FC<PaymentsTableProps> = ({ isAdmin, userId }) => {
   return (
     <div className="bg-surface text-theme p-6 rounded-lg shadow-md">
       {/* 🔹 Filters */}
-      <div className="flex flex-wrap justify-between items-center mb-4">
+      <div className="flex gap-4 flex-wrap justify-between items-center mb-4">
         <InputField
           id="search"
           type="text"
