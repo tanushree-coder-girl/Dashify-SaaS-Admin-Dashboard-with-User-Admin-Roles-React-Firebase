@@ -72,7 +72,11 @@ const DashboardLayout: React.FC = () => {
         </div>
 
         {/* Main content */}
-        <main className="flex-grow bg-theme p-6 pt-20 mt-6 transition-all duration-300 ease-in-out overflow-auto w-[100vw]">
+        <main
+          className={`flex-grow bg-theme p-6 pt-20 mt-6 transition-all duration-300 ease-in-out overflow-auto ${
+            isSidebarOpen ? "w-[100vw] md:w-auto" : " w-[100vw]"
+          } `}
+        >
           <Outlet />
         </main>
       </div>
