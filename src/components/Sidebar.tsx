@@ -7,15 +7,21 @@ import {
   Package,
   CalendarCheck,
 } from "lucide-react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "@context/AuthContext";
 import logo from "@assets/images/dashify_logo.png";
 import useThemeStore from "@store/themeStore";
 
-const Sidebar: React.FC = () => {
+// 👇 Accept the prop for sidebar closing
+type SidebarProps = {
+  closeSidebar: () => void;
+};
+
+const Sidebar: React.FC<SidebarProps> = ({ closeSidebar }) => {
   const { user } = useAuth();
   const isAdmin = user?.role === "admin";
   const navigate = useNavigate();
+  const location = useLocation();
   const { theme } = useThemeStore();
 
   const navLinks = [
@@ -43,8 +49,6 @@ const Sidebar: React.FC = () => {
       icon: <CreditCard size={20} />,
       isAdmin: false,
     },
-
-    // 🔹 **Admin-Only Links**
     {
       name: "Services",
       path: "/dashboard/admin/services",
@@ -57,8 +61,6 @@ const Sidebar: React.FC = () => {
       icon: <Users size={20} />,
       isAdmin: true,
     },
-
-    // 🔹 **Support (Always Last)**
     {
       name: "Support",
       path: "/dashboard/help",
@@ -84,18 +86,20 @@ const Sidebar: React.FC = () => {
         {navLinks
           .filter((link) => (isAdmin ? true : !link.isAdmin))
           .map((link, index) => (
-            <NavLink
+            <button
               key={index}
-              to={link.path}
-              end={link.path === "/dashboard"}
-              className={({ isActive }) =>
-                `flex items-center gap-3 p-2 rounded transition-all duration-300 ${
-                  isActive ? "bg-primary text-theme" : "bg-primary-hover"
-                }`
-              }
+              onClick={() => {
+                if (window.innerWidth < 998) closeSidebar(); // close on mobile
+                navigate(link.path); // redirect
+              }}
+              className={`w-full text-left flex items-center gap-3 p-2 rounded transition-all duration-300 ${
+                location.pathname === link.path
+                  ? "bg-primary text-theme"
+                  : "bg-primary-hover"
+              }`}
             >
               {link.icon} {link.name}
-            </NavLink>
+            </button>
           ))}
       </nav>
     </aside>
