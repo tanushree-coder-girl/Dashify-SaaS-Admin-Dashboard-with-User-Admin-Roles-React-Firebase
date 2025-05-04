@@ -134,7 +134,7 @@ src/
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/dashify.git
+git clone https://github.com/tanushree-coder-girl/Dashify-SaaS-Admin-Dashboard-with-User-Admin-Roles-React-Firebase.git
 cd dashify
 
 ###  Install Dependencies
