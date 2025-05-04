@@ -47,13 +47,14 @@ It supports role-based authentication, real-time Firestore operations, theme swi
   - 10 color palettes with theme switching
 
 - Modern UI/UX
+
   - Responsive layout with Tailwind CSS
   - Icon support via React Icons and Lucide React
   - Toast notifications using React Toastify
 
-- Testing credential 
+- Testing credential
   - Admin -> admin@gmail.com / Admin@123
-  - User  -> user@gmail.com / User@123
+  - User -> user@gmail.com / User@123
 
 ---
 
@@ -139,7 +140,7 @@ src/
 
 ```bash
 git clone https://github.com/tanushree-coder-girl/Dashify-SaaS-Admin-Dashboard-with-User-Admin-Roles-React-Firebase.git
-cd dashify
+cd Dashify-SaaS-Admin-Dashboard-with-User-Admin-Roles-React-Firebase
 
 ###  Install Dependencies
 npm install
