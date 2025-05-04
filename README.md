@@ -51,6 +51,10 @@ It supports role-based authentication, real-time Firestore operations, theme swi
   - Icon support via React Icons and Lucide React
   - Toast notifications using React Toastify
 
+- Testing credential 
+  - Admin -> admin@gmail.com / Admin@123
+  - User  -> user@gmail.com / User@123
+
 ---
 
 ## Tech Stack
