@@ -36,7 +36,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ isLogin, setIsLogin }) => {
     watch,
   } = useForm<AuthFormValues>({
     defaultValues: isLogin
-      ? { email: "admin@gmail.com", password: "Admin@123" }
+      ? { email: "", password: "" }
       : { name: "", email: "", password: "" },
   });
 
@@ -80,7 +80,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ isLogin, setIsLogin }) => {
     setIsLogin(toLogin);
     reset(
       toLogin
-        ? { email: "admin@gmail.com", password: "Admin@123" }
+        ? { email: "", password: "" }
         : { name: "", email: "", password: "" }
     );
   };
